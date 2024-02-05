@@ -1,0 +1,1 @@
+add to a file /home/matteo/projects/nodeconcepts/fs/renamed.js this content: this is some text
