@@ -39,13 +39,18 @@ const fs = require("fs/promises");
       await fs.rename(oldpath, newpath);
       console.log("file renamed successfully");
     } catch (err) {
-      console.log(err.message);
+      if (err.code === "ENOENT") {
+        console.error(`File not found: ${oldpath}`);
+      } else {
+        console.error(`Error reading file: ${err.message}`);
+      }
+      return;
     }
   };
   const addToFile = async (path, content) => {
     try {
-      const fileExists = await fs.open(path, "r");
-      await fs.appendFile(content.toString());
+      const fileExists = await fs.open(path, "a");
+      fileExists.write(content);
       fileExists.close();
     } catch (err) {
       console.log(err.message);
